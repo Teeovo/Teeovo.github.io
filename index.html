@@ -1,56 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>欢迎来到Teeny的世界</title>
+    <title>Welcome to Teeny's World</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background: linear-gradient(to right, pink, turquoise);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         h1 {
-            color: navy;
-        }
-        #marquee {
-            margin: 20px 0;
-            height: 30px;
-            overflow: hidden;
-            position: relative;
-            background: #fefefe;
-            box-shadow: 0 1px 2px rgba(0,0,0,.1);
-        }
-        #marquee p {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            line-height: 30px;
+            color: orange;
             text-align: center;
-            /* Starting position */
-            transform:translateX(100%);
-            /* Apply animation to this element */ 
-            animation: marquee 15s linear infinite;
         }
-        /* Move it (define the animation) */
-        @keyframes marquee {
-            0%   { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <h1>欢迎来到Teeny的世界</h1>
-    <div id="marquee">
-        <p id="marquee-text">这是一个滚动的文本，会不断循环滚动。</p>
-    </div>
+    <h1>Welcome to Teeny's World</h1>
+    <button type="button" onclick="praiseUser()">Click for Happiness</button>
+    <button type="button" onclick="playMusic()">Mood</button>
+    <button type="button" onclick="displayImage()">Continue</button>
 
     <script>
-        var text = ['欢迎来到Teeny的世界', '这是一个滚动的文本', '会不断循环滚动'];
-        var index = 0;
-        
-        setInterval(function() {
-            document.getElementById('marquee-text').textContent = text[index];
-            index = (index + 1) % text.length;
-        }, 5000);
+        function praiseUser() {
+            var praises = ["Great job!", "You're amazing!", "Keep it up!"];
+            var praise = praises[Math.floor(Math.random() * praises.length)];
+            alert(praise);
+        }
+
+        function playMusic() {
+            // You can't directly play music due to the limitations of static websites.
+            // This is a placeholder function.
+            alert("This function is currently unavailable.");
+        }
+
+        function displayImage() {
+            // You need a URL for the jumping baby image to display it.
+            // This is a placeholder function.
+            alert("This function is currently unavailable.");
+        }
     </script>
 </body>
 </html>
