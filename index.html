@@ -16,7 +16,7 @@
             color: orange;
             text-align: center;
         }
-        button {
+        button, #nameInput {
             margin: 10px;
             padding: 10px 20px;
             font-size: 18px;
@@ -28,30 +28,50 @@
             cursor: pointer;
             transition: opacity 0.3s ease;
         }
-        button:hover {
+        button:hover, #nameInput:hover {
             opacity: 1;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
     <h1>Welcome to Teeny's World</h1>
-    <button type="button" onclick="praiseUser()">Click for Happiness</button>
-    <button type="button" onclick="playMusic()">Mood</button>
-    <button type="button" onclick="displayImage()">Continue</button>
+
+    <input id="nameInput" type="text" placeholder="Enter your name" />
+    <button type="button" onclick="submitName()">Submit Name</button>
+
+    <button class="hidden" id="praiseButton" type="button" onclick="praiseUser()">Click for Happiness</button>
+    <button class="hidden" id="musicButton" type="button" onclick="playMusic()">Mood</button>
+    <button class="hidden" id="imageButton" type="button" onclick="displayImage()">Continue</button>
+
+    <audio id="moodMusic" src="your_music_file.mp3" preload="auto"></audio>
 
     <script>
+        function submitName() {
+            var name = document.getElementById("nameInput").value;
+            if (name) {
+                document.getElementById("nameInput").classList.add("hidden");
+                document.getElementById("praiseButton").classList.remove("hidden");
+                document.getElementById("musicButton").classList.remove("hidden");
+                document.getElementById("imageButton").classList.remove("hidden");
+            }
+        }
+
         function praiseUser() {
+            var name = document.getElementById("nameInput").value;
             var praises = [
-                "Great job!",
-                "You're amazing!",
-                "Keep it up!",
-                "You're doing really well!",
-                "I'm proud of you!",
-                "You're doing a great job!",
-                "Keep going!",
-                "You're doing beautifully!",
-                "Fantastic work!",
-                "I believe in you!"
+                name + ", great job!",
+                name + ", you're amazing!",
+                name + ", keep it up!",
+                name + ", you're doing really well!",
+                name + ", I'm proud of you!",
+                name + ", you're doing a great job!",
+                name + ", keep going!",
+                name + ", you're doing beautifully!",
+                name + ", fantastic work!",
+                name + ", I believe in you!",
                 // Add more praise sentences here...
             ];
             var praise = praises[Math.floor(Math.random() * praises.length)];
@@ -59,9 +79,12 @@
         }
 
         function playMusic() {
-            // You can't directly play music due to the limitations of static websites.
-            // This is a placeholder function.
-            alert("This function is currently unavailable.");
+            var music = document.getElementById("moodMusic");
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
         }
 
         function displayImage() {
