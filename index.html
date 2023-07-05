@@ -20,6 +20,16 @@
             margin: 10px;
             padding: 10px 20px;
             font-size: 18px;
+            background: linear-gradient(to right, cyan, blue);
+            opacity: 0.45;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        button:hover {
+            opacity: 1;
         }
     </style>
 </head>
@@ -31,7 +41,19 @@
 
     <script>
         function praiseUser() {
-            var praises = ["Great job!", "You're amazing!", "Keep it up!"];
+            var praises = [
+                "Great job!",
+                "You're amazing!",
+                "Keep it up!",
+                "You're doing really well!",
+                "I'm proud of you!",
+                "You're doing a great job!",
+                "Keep going!",
+                "You're doing beautifully!",
+                "Fantastic work!",
+                "I believe in you!"
+                // Add more praise sentences here...
+            ];
             var praise = praises[Math.floor(Math.random() * praises.length)];
             alert(praise);
         }
