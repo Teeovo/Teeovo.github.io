@@ -40,19 +40,20 @@
     <h1>Welcome to Teeny's World</h1>
 
     <input id="nameInput" type="text" placeholder="Enter your name" />
-    <button type="button" onclick="submitName()">Submit Name</button>
+    <button id="submitButton" type="button" onclick="submitName()">Submit Name</button>
 
     <button class="hidden" id="praiseButton" type="button" onclick="praiseUser()">Click for Happiness</button>
     <button class="hidden" id="musicButton" type="button" onclick="playMusic()">Mood</button>
-    <button class="hidden" id="imageButton" type="button" onclick="displayImage()">Continue</button>
+    <button class="hidden" id="imageButton" type="button" onclick="displayMessage()">Continue</button>
 
-    <audio id="moodMusic" src="your_music_file.mp3" preload="auto"></audio>
+    <audio id="moodMusic" src="https://teeovo.github.io/music.github.io/123.mp3" preload="auto"></audio>
 
     <script>
         function submitName() {
             var name = document.getElementById("nameInput").value;
             if (name) {
                 document.getElementById("nameInput").classList.add("hidden");
+                document.getElementById("submitButton").classList.add("hidden");
                 document.getElementById("praiseButton").classList.remove("hidden");
                 document.getElementById("musicButton").classList.remove("hidden");
                 document.getElementById("imageButton").classList.remove("hidden");
@@ -87,10 +88,8 @@
             }
         }
 
-        function displayImage() {
-            // You need a URL for the jumping baby image to display it.
-            // This is a placeholder function.
-            alert("This function is currently unavailable.");
+        function displayMessage() {
+            alert("Life is certainly full of bumps, but you've become cuter today and it'll be the same tomorrow. Let's work hard together!");
         }
     </script>
 </body>
