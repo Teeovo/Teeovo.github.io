@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>My First Web Page</title>
+    <title>欢迎来到Teeny的世界</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -10,17 +10,47 @@
         h1 {
             color: navy;
         }
+        #marquee {
+            margin: 20px 0;
+            height: 30px;
+            overflow: hidden;
+            position: relative;
+            background: #fefefe;
+            box-shadow: 0 1px 2px rgba(0,0,0,.1);
+        }
+        #marquee p {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            line-height: 30px;
+            text-align: center;
+            /* Starting position */
+            transform:translateX(100%);
+            /* Apply animation to this element */ 
+            animation: marquee 15s linear infinite;
+        }
+        /* Move it (define the animation) */
+        @keyframes marquee {
+            0%   { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
-    <h1>Hello World!</h1>
-    <p id="demo">This is a paragraph.</p>
-    <button type="button" onclick="changeText()">Click Me!</button>
+    <h1>欢迎来到Teeny的世界</h1>
+    <div id="marquee">
+        <p id="marquee-text">这是一个滚动的文本，会不断循环滚动。</p>
+    </div>
 
     <script>
-        function changeText() {
-            document.getElementById("demo").innerHTML = "You've clicked the button!";
-        }
+        var text = ['欢迎来到Teeny的世界', '这是一个滚动的文本', '会不断循环滚动'];
+        var index = 0;
+        
+        setInterval(function() {
+            document.getElementById('marquee-text').textContent = text[index];
+            index = (index + 1) % text.length;
+        }, 5000);
     </script>
 </body>
 </html>
