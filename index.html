@@ -29,7 +29,8 @@
             right: 0; 
             bottom: 0; 
             left: 0;
-            background: url('C:/test.jpg') no-repeat center top / cover, 
+			background: url('https://teeovo.github.io/photo/test.jpg') no-repeat center top / cover,
+
 
                         linear-gradient(to right, rgba(255,105,180,0.5), rgba(0,206,209,0.5));
             pointer-events: none;
@@ -69,28 +70,28 @@
             width: 260px;
         }
 		#scrollingText {
-			color: purple;
+			color: blue;
 			font-weight: bold;
-			font-size: 24px;
-			position: fixed;
-			bottom: 0;
-			left: 0;
-			width: 100%;
+			font-size: 17px;
+			position: relative;
 			padding: 10px 0;
-			background: transparent;
+			background: pink; /* 粉色实心背景 */
 			text-align: center;
 			white-space: nowrap;
 			overflow: hidden;
-			animation: scrollingAnimation 10s linear infinite;
+			animation: scrollingAnimation 5s linear infinite; /* 加快滚动速度 */
+			margin-top: 20px; /* 上边距，将文本推到按钮下方 */
+			display: inline-block; /* 这将使得边框紧随文本 */
 		}
-        @keyframes scrollingAnimation {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
+
+		@keyframes scrollingAnimation {
+			0% {
+				transform: translateX(100%);
+			}
+			100% {
+				transform: translateX(-100%);
+			}
+		}
     </style>
 </head>
 <body>
@@ -102,13 +103,14 @@
     <button class="hidden" id="musicButton" type="button" onclick="playMusic()">Mood</button>
     <button class="hidden" id="imageButton" type="button" onclick="displayMessage()">Continue</button>
     <button class="hidden" id="chatGptButton" type="button" onclick="openChatBox()">Play with ChatGPT</button>
+	<div id="scrollingText">Use a computer for a more complete experience！</div>
     <div id="chatBox" class="hidden">
         <div id="chatHistory"></div>
         <input id="chatInput" type="text" placeholder="Type a message" />
         <button id="sendButton" type="button" onclick="sendMessage()">Send</button>
     </div>
     <audio id="moodMusic" src="https://teeovo.github.io/music.github.io/123.mp3" preload="auto"></audio>
-    <div id="scrollingText">Browser open buttons are more flexible!</div>
+    
     <script>
 		function submitName() {
 			var name = document.getElementById("nameInput").value;
