@@ -93,6 +93,284 @@
 			}
 		}
     </style>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div id="upperDiv"></div>
+    <h1>Welcome to Teeny's World</h1>
+    <input id="nameInput" type="text" placeholder="Enter your name" />
+    <button id="submitButton" type="button" onclick="submitName()">Submit Name</button>
+    <button class="hidden" id="praiseButton" type="button" onclick="praiseUser()">Click for Happiness</button>
+    <button class="hidden" id="musicButton" type="button" onclick="playMusic()">Mood</button>
+    <button class="hidden" id="imageButton" type="button" onclick="startGame()">Continue</button>
+    <button class="hidden" id="chatGptButton" type="button" onclick="openChatBox()">Play with ChatGPT</button>
+	<div id="scrollingText">Use a computer for a more complete experience！</div>
+    <div id="chatBox" class="hidden">
+        <div id="chatHistory"></div>
+        <input id="chatInput" type="text" placeholder="Type a message" />
+        <button id="sendButton" type="button" onclick="sendMessage()">Send</button>
+    </div>
+    <audio id="moodMusic" src="https://teeovo.github.io/music.github.io/123.mp3" preload="auto"></audio>
+    
+    <script>
+		function submitName() {
+			var name = document.getElementById("nameInput").value;
+			if (name) {
+				document.getElementById("nameInput").classList.add("hidden");
+				document.getElementById("submitButton").classList.add("hidden");
+				document.getElementById("praiseButton").classList.remove("hidden");
+				document.getElementById("musicButton").classList.remove("hidden");
+				document.getElementById("imageButton").classList.remove("hidden");
+				document.getElementById("chatGptButton").classList.remove("hidden");
+			}
+		}
+
+		function praiseUser() {
+			var name = document.getElementById("nameInput").value;
+			var praises = [
+				name + ", great job!",
+				name + ", you're amazing!",
+				name + ", keep it up!",
+				name + ", you're doing really well!",
+				name + ", I'm proud of you!",
+				name + ", you're doing a great job!",
+				name + ", keep going!",
+				name + ", you're doing beautifully!",
+				name + ", fantastic work!",
+				name + ", I believe in you!"
+			];
+			var praise = praises[Math.floor(Math.random() * praises.length)];
+			alert(praise);
+		}
+
+		function playMusic() {
+			var music = document.getElementById("moodMusic");
+			if (music.paused) {
+				music.play();
+			} else {
+				music.pause();
+			}
+		}
+
+		function displayMessage() {
+			alert("Life is certainly full of bumps, but you've become cuter today and it'll be the same tomorrow. Let's work hard together!");
+		}
+
+		function openChatBox() {
+			document.getElementById("chatBox").classList.remove("hidden");
+		}
+
+		function sendMessage() {
+			var message = document.getElementById("chatInput").value;
+			var requestData = {
+				prompt: message
+			};
+
+			fetch('/api/gpt3', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(requestData)
+			})
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Request failed');
+				}
+				return response.json();
+			})
+			.then(data => {
+				var response = data.response;
+				var chatHistory = document.getElementById("chatHistory");
+				chatHistory.innerHTML += "User: " + message + "<br>GPT: " + response + "<br>";
+				document.getElementById("chatInput").value = '';
+			})
+			.catch(error => {
+				console.error(error);
+				// 处理错误情况
+			});
+		}
+
+
+
+
+		function chatWithGpt(prompt) {
+			return fetch('/api/gpt3', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					prompt: prompt
+				})
+			})
+			.then(response => response.json())
+			.then(data => data.response);
+		}
+		let secretNumber = Math.floor(Math.random() * 100) + 1;
+		let attempts = 0;
+
+		function startGame() {
+			secretNumber = Math.floor(Math.random() * 100) + 1;
+			attempts = 0;
+			Swal.fire({
+				title: "I'm thinking of a number between 1 and 100. Can you guess what it is?",
+				input: 'text',
+				inputPlaceholder: 'Enter your guess here',
+				showCancelButton: true,
+				confirmButtonText: 'Submit Guess',
+				cancelButtonText: 'Quit'
+			}).then(result => {
+				if (result.isConfirmed) {
+					guessNumber(result.value);
+				}
+			});
+		}
+
+		function guessNumber(guess) {
+			attempts++;
+			if (guess < secretNumber) {
+				Swal.fire({
+					title: "Too low! Try a larger number.",
+					input: 'text',
+					inputPlaceholder: 'Enter your guess here',
+					showCancelButton: true,
+					confirmButtonText: 'Submit Guess',
+					cancelButtonText: 'Quit'
+				}).then(result => {
+					if (result.isConfirmed) {
+						guessNumber(result.value);
+					}
+				});
+			} else if (guess > secretNumber) {
+				Swal.fire({
+					title: "Too high! Try a smaller number.",
+					input: 'text',
+					inputPlaceholder: 'Enter your guess here',
+					showCancelButton: true,
+					confirmButtonText: 'Submit Guess',
+					cancelButtonText: 'Quit'
+				}).then(result => {
+					if (result.isConfirmed) {
+						guessNumber(result.value);
+					}
+				});
+			} else if (guess == secretNumber) {
+				Swal.fire("Congratulations! You found the number in " + attempts + " attempts!");
+			} else {
+				Swal.fire({
+					title: "Please enter a valid number.",
+					input: 'text',
+					inputPlaceholder: 'Enter your guess here',
+					showCancelButton: true,
+					confirmButtonText: 'Submit Guess',
+					cancelButtonText: 'Quit'
+				}).then(result => {
+					if (result.isConfirmed) {
+						guessNumber(result.value);
+					}
+				});
+			}
+		}
+
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Teeny's World</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, pink, turquoise);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+        #upperDiv {
+            position: absolute;
+            top: 0;
+            width: 80%;
+            height: 45vh;
+            z-index: -1;
+        }
+        #upperDiv::after {
+            content: '';
+            position: absolute;
+            top: 0; 
+            right: 0; 
+            bottom: 0; 
+            left: 0;
+			background: url('https://teeovo.github.io/photo/test.jpg') no-repeat center top / cover,
+
+
+                        linear-gradient(to right, rgba(255,105,180,0.5), rgba(0,206,209,0.5));
+            pointer-events: none;
+        }
+        h1 {
+            color: orange;
+            text-align: center;
+            margin-top: 50vh;
+        }
+        button, #nameInput {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background: linear-gradient(to right, cyan, blue);
+            opacity: 0.45;
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        button:hover, #nameInput:hover {
+            opacity: 1;
+        }
+        .hidden {
+            display: none;
+        }
+        #chatBox {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid black;
+            width: 300px;
+            height: 400px;
+            overflow: auto;
+        }
+        #chatInput {
+            width: 260px;
+        }
+		#scrollingText {
+			color: blue;
+			font-weight: bold;
+			font-size: 17px;
+			position: relative;
+			padding: 10px 0;
+			background: pink; /* 粉色实心背景 */
+			text-align: center;
+			white-space: nowrap;
+			overflow: hidden;
+			animation: scrollingAnimation 5s linear infinite; /* 加快滚动速度 */
+			margin-top: 20px; /* 上边距，将文本推到按钮下方 */
+			display: inline-block; /* 这将使得边框紧随文本 */
+		}
+
+		@keyframes scrollingAnimation {
+			0% {
+				transform: translateX(100%);
+			}
+			100% {
+				transform: translateX(-100%);
+			}
+		}
+    </style>
 </head>
 <body>
     <div id="upperDiv"></div>
